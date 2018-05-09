@@ -1,0 +1,138 @@
+<mat-grid-list cols="2">
+  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2>Stavke</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="mat-elevation-z1">
+        <mat-table #stavke [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="naziv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Naziv </mat-header-cell>
+            <mat-cell *matCellDef="let stavka"> {{stavka.naziv}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="kategorija">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Kategorija </mat-header-cell>
+            <mat-cell *matCellDef="let stavka"> {{stavka.kategorija}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="operacije">
+            <mat-header-cell *matHeaderCellDef> Operacije </mat-header-cell>
+            <mat-cell *matCellDef="let stavka">
+              <button mat-button color="primary" (click)="dodaj(stavka)">Dodaj u cenovnik</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginatorStavke
+                        [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 20]"
+                        [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <br>
+  <mat-divider></mat-divider>
+
+ <mat-card>
+    <mat-card-header>
+      <mat-card-title><h3>Stavka za dodavanje u cenovnik</h3></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="stavkaCenovnikaForm" (submit)="save()">
+
+        <div class="form-group">
+          <mat-form-field>
+            <input
+              matInput
+              readonly = "true"
+              placeholder="Naziv"
+              class="form-control"
+              formControlName="naziv" >
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field>
+            <input
+              matInput
+              readonly = "true"
+              placeholder="Kategorija"
+              class="form-control"
+              formControlName="kategorija" >
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field>
+            <input
+              matInput
+              type="number"
+              placeholder="Cena"
+              class="form-control"
+              formControlName="cena" >
+          </mat-form-field>
+        </div>
+
+        <button mat-button type="submit" [disabled] = "!stavkaCenovnikaForm.valid">Dodaj</button>
+
+      </form>
+    </mat-card-content>
+ </mat-card>
+  <mat-divider></mat-divider>
+  <br>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2>Cenovnik</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="mat-elevation-z1">
+        <mat-table #cenovnik [dataSource]="dataSourceCenovnik" matSort>
+
+          <ng-container matColumnDef="naziv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Naziv </mat-header-cell>
+            <mat-cell *matCellDef="let stavka"> {{stavka.naziv}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="kategorija">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Kategorija </mat-header-cell>
+            <mat-cell *matCellDef="let stavka"> {{stavka.kategorija}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cena">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Cena </mat-header-cell>
+            <mat-cell *matCellDef="let stavka"> {{stavka.cena}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="operacije">
+            <mat-header-cell *matHeaderCellDef> Operacije </mat-header-cell>
+            <mat-cell *matCellDef="let stavka">
+              <button mat-button color="primary" (click)="izmeniStavkuCenovnika(stavka)">Izmeni</button>
+              <button mat-button color="warn" (click)="obrisiStavkuCenovnika(stavka)">Obrisi</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumnsCenovnik"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumnsCenovnik;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginatorCenovnik
+                        [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 20]"
+                        [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+
+      <button mat-button type="submit" [disabled] = "stavkeCenovnika.length === 0">Sacuvaj cenovnik</button>
+
+    </mat-card-content>
+  </mat-card>
+
+</mat-grid-list>

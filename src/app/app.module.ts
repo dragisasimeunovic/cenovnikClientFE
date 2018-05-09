@@ -44,12 +44,14 @@ import { AppComponent } from './app.component';
 import { StavkeComponent } from './stavke/stavke.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DataService } from './data.service';
+import { CenovnikComponent } from './cenovnik/cenovnik.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    StavkeComponent
+    StavkeComponent,
+    CenovnikComponent
   ],
   imports: [
     FormsModule,

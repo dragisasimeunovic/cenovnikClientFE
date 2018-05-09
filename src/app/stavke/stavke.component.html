@@ -14,7 +14,7 @@
     <ng-container matColumnDef="operacije">
       <mat-header-cell *matHeaderCellDef> Operacije </mat-header-cell>
       <mat-cell *matCellDef="let stavka">
-        <button mat-button color="primary" (click)="izmeni(stavka.id)">Izmeni</button>
+        <button mat-button color="primary" (click)="izmeni(stavka)">Izmeni</button>
         <button mat-button color="warn" (click)="obrisi(stavka.id)">Obrisi</button>
       </mat-cell>
     </ng-container>
@@ -29,3 +29,20 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
 </div>
+
+
+<form [formGroup]="stavkaForm" (submit)="save()">
+
+  <div class="form-group">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Naziv"
+        class="form-control"
+        formControlName="naziv" >
+    </mat-form-field>
+  </div>
+
+  <button mat-button type="submit" [disabled] = "!stavkaForm.valid">Sacuvaj izmene</button>
+
+</form>

@@ -29,9 +29,13 @@ export class CenovnikComponent implements OnInit {
   stavkaCenovnikaForm: FormGroup;
   selectedStavka: any;
 
+  cenovnikForm: FormGroup;
+
   constructor(private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
+
+    this.stavkeCenovnika = [];
 
     this.dataService.sveStavke().subscribe(data=>{
         this.stavke = data;
@@ -39,7 +43,6 @@ export class CenovnikComponent implements OnInit {
         this.dataSource.sort = this.sortStavke;
         this.dataSource.paginator = this.paginatorStavke;
 
-        this.stavkeCenovnika = [];
         this.dataSourceCenovnik = new MatTableDataSource<any>(this.stavkeCenovnika);
         this.dataSourceCenovnik.sort = this.sortCenovnik;
         this.dataSourceCenovnik.paginator = this.paginatorCenovnik;
@@ -50,6 +53,10 @@ export class CenovnikComponent implements OnInit {
         naziv: new FormControl('',[Validators.required]),
         kategorija: new FormControl('',[Validators.required]),
         cena: new FormControl('',[Validators.required])
+      })
+
+      this.cenovnikForm = new FormGroup({
+        datumPocetka: new FormControl('',[Validators.required])
       })
 
   }
@@ -89,6 +96,20 @@ export class CenovnikComponent implements OnInit {
   izmeniStavkuCenovnika(stavkaCenovnika) {
     this.dodaj(stavkaCenovnika);
     this.dataSourceCenovnik = new MatTableDataSource<any>(this.stavkeCenovnika);
+  }
+
+  saveCenovnik() {
+    this.dataService.saveCenovnik(this.cenovnikForm.value).subscribe(data=>{
+      for (var i = 0; i < this.stavkeCenovnika.length; i++) {
+        this.dataService.saveStavkaCenovnika(this.stavkeCenovnika[i], data.id).subscribe(data=>{
+          console.log(data);
+        })
+      }
+      this.stavkeCenovnika = [];
+      this.dataSourceCenovnik = new MatTableDataSource<any>(this.stavkeCenovnika);
+      this.dataSourceCenovnik.sort = this.sortCenovnik;
+      this.dataSourceCenovnik.paginator = this.paginatorCenovnik;
+    })
   }
 
 }

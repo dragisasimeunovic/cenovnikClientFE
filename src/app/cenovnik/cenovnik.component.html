@@ -130,7 +130,23 @@
         </mat-paginator>
       </div>
 
-      <button mat-button type="submit" [disabled] = "stavkeCenovnika.length === 0">Sacuvaj cenovnik</button>
+      <form [formGroup]="cenovnikForm">
+          <div class="form-group">
+            <mat-form-field>
+              <input [matDatepicker]="datumPocetka"
+                      [min]="minDate"
+                      matInput
+                      placeholder="Datum pocetka vazenja"
+                      class="form-control"
+                      formControlName="datumPocetka" >
+              <mat-datepicker-toggle matSuffix [for]="datumPocetka">
+              </mat-datepicker-toggle>
+              <mat-datepicker #datumPocetka></mat-datepicker>
+            </mat-form-field>
+          </div>
+      </form>
+
+      <button mat-button [disabled] = "stavkeCenovnika.length === 0" (click)="saveCenovnik()" >Sacuvaj cenovnik</button>
 
     </mat-card-content>
   </mat-card>

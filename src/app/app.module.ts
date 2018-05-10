@@ -73,6 +73,7 @@ import { CenovnikComponent } from './cenovnik/cenovnik.component';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatRadioModule,
